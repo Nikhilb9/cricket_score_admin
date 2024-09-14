@@ -1,0 +1,32 @@
+.app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.commentary-buttons,
+.team-scorecard,
+.player-scorecard,
+.ball-commentary {
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 45%;
+  margin-bottom: 20px;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ball-commentary .comment {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.ball-commentary .comment button {
+  padding: 5px 10px;
+}
