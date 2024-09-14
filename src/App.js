@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css'; // Optional, for adding custom styles
 
-const API_URL = 'http://localhost:9000'; // Replace with your actual API URL
-
 const App = () => {
   const [teamData, setTeamData] = useState({
     name: '',
