@@ -165,7 +165,9 @@ const App = () => {
           <p>
             Runs: {teamData.runs} / Wickets: {teamData.wickets}
           </p>
-          <p>Balls & Overs: {teamData.overs}</p>
+          <p>
+            Balls & Overs: {teamData.balls}/{teamData.overs}
+          </p>
           <p>
             Extras: Wide: {teamData.wide}, NoBall: {teamData.noBall}, LegBye:{' '}
             {teamData.legBye}, Bye: {teamData.bye} , Overthrow:{' '}
