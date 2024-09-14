@@ -122,89 +122,105 @@ const App = () => {
   };
 
   return (
-    <div className="app">
-      <div className="commentary-buttons">
-        <h3>Commentary Buttons</h3>
-        <div className="batsman">
-          <div>
-            Striker: <p>{striker.name}</p>
+    <div>
+      <p
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '5vh',
+        }}
+      >
+        Cricket match admin demo app all data update automatically when on click
+        button
+      </p>
+      <div className="app">
+        <div className="commentary-buttons">
+          <h3>Commentary Buttons</h3>
+          <div className="batsman">
+            <div>
+              Striker: <p style={{ color: 'blue' }}>{striker.name}</p>
+            </div>
+            <div>
+              Non-striker: <p style={{ color: 'blue' }}>{nonStriker.name}</p>
+            </div>
           </div>
-          <div>
-            Non-striker: <p>{nonStriker.name}</p>
+          <div className="button-grid">
+            {[
+              0,
+              1,
+              2,
+              3,
+              4,
+              6,
+              'WICKET',
+              'WIDE',
+              'NO_BALL',
+              'BYE',
+              'LEG_BYE',
+              'CHANGE_BOWLER',
+              'RESET_MATCH',
+            ].map((label) => (
+              <button
+                style={{ color: 'red' }}
+                key={label}
+                onClick={() => handleAction(label)}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
-        <div className="button-grid">
-          {[
-            0,
-            1,
-            2,
-            3,
-            4,
-            6,
-            'WICKET',
-            'WIDE',
-            'NO_BALL',
-            'BYE',
-            'LEG_BYE',
-            'CHANGE_BOWLER',
-            'RESET_MATCH',
-          ].map((label) => (
-            <button key={label} onClick={() => handleAction(label)}>
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
 
-      <div className="team-scorecard">
-        <h3>Team Scorecard</h3>
-        <div>
-          <p>
-            {teamData.batsmanTeamName} VS {teamData.bowlersTeamName}
-          </p>
-          <p>
-            Runs: {teamData.runs} / Wickets: {teamData.wickets}
-          </p>
-          <p>
-            Balls & Overs: {teamData.balls}/{teamData.overs}
-          </p>
-          <p>
-            Extras: Wide: {teamData.wide}, NoBall: {teamData.noBall}, LegBye:{' '}
-            {teamData.legBye}, Bye: {teamData.bye} , Overthrow:{' '}
-            {teamData.overthrow}
-          </p>
-        </div>
-      </div>
-
-      <div className="player-scorecard">
-        <h3>Player Scorecard</h3>
-        <div className="batsman">
-          <h4>Batsman</h4>
-          {players.batsman.map((batsman, index) => (
-            <p key={index}>
-              Name : {batsman.playerName}, Runs - {batsman.runs}, On Strike -
-              {batsman.isOnStrike ? 'Yes' : 'No'}
-            </p>
-          ))}
-        </div>
-        <div className="bowler">
-          <h4>Bowler</h4>
-          {players.bowler.map((bowler) => (
+        <div className="team-scorecard">
+          <h3>Team Scorecard</h3>
+          <div>
+            <p style={{ color: 'blue' }}>{teamData.batsmanTeamName}</p> VS
+            <p style={{ color: 'green' }}>{teamData.bowlersTeamName}</p>
             <p>
-              {bowler.playerName}, Runs: {bowler.runs}, Overs: {bowler.overs},
-              On Bowling: {bowler.isOnBowling ? 'Yes' : 'No'}
+              Runs: {teamData.runs} Wickets: {teamData.wickets}
             </p>
+            <p>
+              Balls: {teamData.balls} Overs: {teamData.overs}
+            </p>
+            <p>
+              Extras: Wide: {teamData.wide}, NoBall: {teamData.noBall}, LegBye:{' '}
+              {teamData.legBye}, Bye: {teamData.bye} , Overthrow:{' '}
+              {teamData.overthrow}
+            </p>
+          </div>
+        </div>
+
+        <div className="player-scorecard">
+          <h3>Player Scorecard</h3>
+          <div className="batsman">
+            <h4>Batsman</h4>
+            {players.batsman.map((batsman, index) => (
+              <p key={index} style={{ color: 'blue' }}>
+                Name : {batsman.playerName}, Runs - {batsman.runs}, On Strike -
+                {batsman.isOnStrike ? 'Yes' : 'No'}
+              </p>
+            ))}
+          </div>
+          <div className="bowler">
+            <h4>Bowler</h4>
+            {players.bowler.map((bowler) => (
+              <p style={{ color: 'green' }}>
+                {bowler.playerName}, Runs: {bowler.runs}, Overs: {bowler.overs},
+                On Bowling: {bowler.isOnBowling ? 'Yes' : 'No'}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        <div className="ball-commentary">
+          <h3>Ball By Ball Commentary</h3>
+          {commentary.map((comment, index) => (
+            <div key={index} className="comment">
+              <p>{comment}</p>
+            </div>
           ))}
         </div>
-      </div>
-
-      <div className="ball-commentary">
-        <h3>Ball By Ball Commentary</h3>
-        {commentary.map((comment, index) => (
-          <div key={index} className="comment">
-            <p>{comment}</p>
-          </div>
-        ))}
       </div>
     </div>
   );
