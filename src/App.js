@@ -15,6 +15,8 @@ const App = () => {
     overthrow: 0,
   });
 
+  const [inputValue, setInputValue] = useState('');
+
   const [striker, setStriker] = useState('');
   const [nonStriker, setNonStriker] = useState('');
   const [bowler, setBowler] = useState('');
@@ -121,6 +123,49 @@ const App = () => {
     await fetchMatchScore();
   };
 
+  const handleSubmit = async (event, ruleType) => {
+    event.preventDefault();
+
+    const body = {
+      event: 'EXTRA',
+      runValue: 0,
+      ballStatus: '',
+      isWicket: false,
+      newBall: false,
+      batsmanId: striker.id,
+      bowlerId: bowler.id,
+    };
+    body.runValue = Number(inputValue) + 1;
+
+    switch (ruleType) {
+      case 'wideRuns':
+        body.ballStatus = 'WIDE_RUNS';
+        break;
+      case 'noBallByeRuns':
+        body.ballStatus = 'NO_BALL_BYE_RUNS';
+        break;
+      case 'noBallRuns':
+        body.ballStatus = 'NO_BALL_RUNS';
+        break;
+      case 'noBallLegByeRuns':
+        body.ballStatus = 'NO_BALL_LEG_BYE_RUNS';
+        break;
+      case 'runsOverthrow':
+        body.ballStatus = 'OVERTHROW_RUNS';
+        body.runValue = body.runValue - 1;
+        break;
+      default:
+        break;
+    }
+    // Clear the input after submit
+    setInputValue('');
+    await axios.post('http://localhost:9000/cricket/match/score', body);
+    await fetchMatchScore();
+  };
+
+  // Check if input value is valid (between 0 and 6)
+  const isInputValid = inputValue !== '' && parseInt(inputValue, 10) <= 6;
+
   return (
     <div>
       <p
@@ -169,6 +214,66 @@ const App = () => {
                 {label}
               </button>
             ))}
+          </div>
+          <div>
+            <div style={{ marginBottom: '20px' }}>
+              <input
+                type="text"
+                placeholder="Enter runs"
+                value={inputValue}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numbers between 0 and 6
+                  if (
+                    /^\d*$/.test(value) &&
+                    (value === '' ||
+                      (parseInt(value, 10) <= 6 && parseInt(value, 10) > 0))
+                  ) {
+                    setInputValue(value);
+                  }
+                }}
+                style={{
+                  width: '200px',
+                  marginTop: '10px',
+                }} // Space for the input
+              />
+            </div>
+
+            {/* Buttons to submit the input value for different rules */}
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
+            >
+              <button
+                onClick={(e) => handleSubmit(e, 'wideRuns')}
+                disabled={!isInputValid}
+              >
+                Wide + Runs
+              </button>
+              <button
+                onClick={(e) => handleSubmit(e, 'noBallByeRuns')}
+                disabled={!isInputValid}
+              >
+                Noball + Bye
+              </button>
+              <button
+                onClick={(e) => handleSubmit(e, 'noBallRuns')}
+                disabled={!isInputValid}
+              >
+                Noball + Runs
+              </button>
+              <button
+                onClick={(e) => handleSubmit(e, 'noBallLegByeRuns')}
+                disabled={!isInputValid}
+              >
+                Noball + Legbye
+              </button>
+              <button
+                onClick={(e) => handleSubmit(e, 'runsOverthrow')}
+                disabled={!isInputValid}
+              >
+                Overthrow Runs
+              </button>
+            </div>
           </div>
         </div>
 
